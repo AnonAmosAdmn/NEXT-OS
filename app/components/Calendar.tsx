@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Rnd } from 'react-rnd'; // Import Rnd from react-rnd
+import { Rnd } from 'react-rnd';
 
 export default function Calendar() {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -15,7 +15,7 @@ export default function Calendar() {
     const month = currentDate.getMonth();
     const days = daysInMonth(year, month);
     const firstDay = new Date(year, month, 1).getDay();
-    const daysArray = Array(firstDay).fill(null); // Empty slots for days before the 1st
+    const daysArray = Array(firstDay).fill(null);
     for (let i = 1; i <= days; i++) {
       daysArray.push(i);
     }
@@ -36,27 +36,28 @@ export default function Calendar() {
   ];
 
   return (
-    <div className="relative w-full h-screen"> {/* Ensure parent div has full width */}
+    <div className="relative w-full h-screen">
       <Rnd
         default={{
-          x: 50, // Initial horizontal position
-          y: 50, // Initial vertical position
-          width: 400, // Initial width
-          height: 400, // Initial height
+          x: 100,
+          y: 100,
+          width: 400,
+          height: 500,
         }}
-        minWidth={300} // Minimum width
-        minHeight={300} // Minimum height
+        minWidth={300}
+        minHeight={300}
       >
-        <div className="bg-white shadow-xl rounded-2xl p-6 w-full max-w-md text-center">
-          <h1 className="text-2xl font-bold mb-4 text-gray-800">📅 Calendar</h1>
-          <div className="flex justify-between items-center mb-4">
+        <div className="bg-gray-800 shadow-xl rounded-2xl p-8 w-full max-w-md text-center">
+          <h1 className="text-2xl font-bold mb-2 text-black">📅 Calendar</h1>
+
+          <div className="flex justify-between items-center mb-6">
             <button
               onClick={handlePrevMonth}
               className="bg-indigo-600 text-white px-4 py-2 rounded-md shadow hover:bg-indigo-700 transition"
             >
               Prev
             </button>
-            <h2 className="text-lg font-semibold text-gray-800">
+            <h2 className="text-lg font-semibold text-black">
               {monthNames[currentDate.getMonth()]} {currentDate.getFullYear()}
             </h2>
             <button
@@ -66,17 +67,20 @@ export default function Calendar() {
               Next
             </button>
           </div>
-          <div className="grid grid-cols-7 gap-2">
+
+          <div className="grid grid-cols-7 gap-3 text-black">
             {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day) => (
-              <div key={day} className="font-bold text-gray-600">
+              <div key={day} className="font-semibold text-black">
                 {day}
               </div>
             ))}
             {getDaysArray().map((day, index) => (
               <div
                 key={index}
-                className={`p-2 text-center rounded ${
-                  day ? 'bg-indigo-100 text-gray-800' : ''
+                className={`p-2 text-center rounded-md shadow-sm ${
+                  day
+                    ? 'bg-indigo-100 text-black font-medium'
+                    : 'bg-transparent'
                 }`}
               >
                 {day || ''}
