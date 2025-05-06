@@ -1,6 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { Rnd } from 'react-rnd'; // Import Rnd from react-rnd
+import { Rnd } from 'react-rnd';
 
 export default function ClockApp() {
   const [currentTime, setCurrentTime] = useState('');
@@ -28,50 +28,56 @@ export default function ClockApp() {
   }, [alarmTime, alarmTriggered]);
 
   return (
-    <div className="relative w-full h-screen"> {/* Ensure parent div has full width */}
+    <div className="relative w-full h-screen">
       <Rnd
         default={{
-          x: 50, // Initial horizontal position
-          y: 50, // Initial vertical position
-          width: 400, // Initial width
-          height: 350, // Initial height
+          x: 100,
+          y: 100,
+          width: 420,
+          height: 320,
         }}
-        minWidth={300} // Minimum width
-        minHeight={200} // Minimum height
+        minWidth={320}
+        minHeight={320}
+        dragHandleClassName="drag-handle"
       >
-        <div className="bg-white shadow-xl rounded-2xl p-8 w-full max-w-md text-center">
-          <h1 className="text-3xl font-bold mb-6 text-black">🕒 Digital Alarm Clock</h1>
-
-          {/* Current Time Display */}
-          <div className="text-6xl font-mono text-black mb-6">
-            {currentTime || '--:--'}
+        <div className="flex flex-col h-full bg-gray-900 text-white rounded-2xl shadow-2xl border border-gray-700 overflow-hidden">
+          {/* Window Title Bar */}
+          <div className="drag-handle flex items-center justify-between px-4 py-2 bg-gray-800 border-b border-gray-700 cursor-move">
+            <span className="text-2x1 font-semibold">🕒 Clock </span>
+            <span className="text-gray-400 text-xs"></span>
           </div>
 
-          {/* Alarm Setter */}
-          <div className="bg-indigo-600 rounded-xl p-4 shadow-inner">
-            <h2 className="text-lg font-semibold text-black mb-2">Set Alarm</h2>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <input
-                type="time"
-                value={tempAlarm}
-                onChange={(e) => setTempAlarm(e.target.value)}
-                className="px-4 py-2 border border-indigo-500 rounded-md text-black shadow-sm focus:ring-indigo-300 focus:border-indigo-300 w-full sm:w-auto"
-              />
-              <button
-                onClick={() => {
-                  setAlarmTime(tempAlarm);
-                  setAlarmTriggered(false);
-                }}
-                className="bg-white text-indigo-700 px-6 py-2 rounded-md shadow hover:bg-gray-200 transition"
-              >
-                Set Alarm
-              </button>
+          {/* Clock Content */}
+          <div className="flex flex-col justify-between flex-grow p-6 space-y-6">
+            <div className="text-center">
+              <div className="text-5xl font-mono">{currentTime || '--:--'}</div>
             </div>
-            {alarmTime && (
-              <p className="text-sm text-white mt-3">
-                Alarm set for: <span className="font-semibold">{alarmTime}</span>
-              </p>
-            )}
+
+            <div className="bg-gray-800 p-4 rounded-lg shadow-inner">
+              <h2 className="text-base font-semibold mb-3">Set Alarm</h2>
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <input
+                  type="time"
+                  value={tempAlarm}
+                  onChange={(e) => setTempAlarm(e.target.value)}
+                  className="px-3 py-2 text-black rounded-md border border-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                />
+                <button
+                  onClick={() => {
+                    setAlarmTime(tempAlarm);
+                    setAlarmTriggered(false);
+                  }}
+                  className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md shadow transition"
+                >
+                  Set Alarm
+                </button>
+              </div>
+              {alarmTime && (
+                <p className="text-sm text-gray-300 mt-3">
+                  Alarm set for: <span className="font-bold">{alarmTime}</span>
+                </p>
+              )}
+            </div>
           </div>
         </div>
       </Rnd>
